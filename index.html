@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детский центр</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore-compat.js"></script>
+</head>
+
+<body>
+    <div class="page-main">
+        <div class="column-1">
+            <button id="out-button1">Акции</button>
+            <button id="out-button2">Абонементы</button>
+            <button id="out-button3">Товар</button>
+            <button>База клиентов</button>
+            <button id="out-button">Сотрудники</button>
+            <button style="margin-top: 400px;" onclick="window.close();">Завершить сеанс</button>
+        </div>
+        <div class="column-2" id="out-columm">
+        </div>
+        <div class="column-3">
+            <div class="price-1">
+                <div class="price-1-info">
+                    <p>Сумма</p>
+                </div>
+                <div class="price-2-info">
+                    <p>Итоговая сумма</p>
+                </div>
+            </div>
+            <div class="price-2" id="out-price2">
+
+            </div>
+            <div class="price-3">
+                <div class="price-3-info">
+                    <button>X</button>
+                </div>
+                <div class="price-4-info">
+                    <button>Печать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/index.js"></script>
+    <script src="db/firebase.js" type="module"></script>
+</body>
+
+</html>
