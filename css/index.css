@@ -122,3 +122,52 @@ body {
     font-size: 30px;
     
 }
+
+#user-form {
+    padding: 20px;
+    background-color: wheat;
+    border: 2px solid rgba(202, 144, 35, 0.747);
+}
+
+#notification {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid;
+}
+
+#notification.success {
+    border-color: green;
+    color: green;
+}
+
+#notification.error {
+    border-color: red;
+    color: red;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.custom-table {
+    border-collapse: collapse;
+    width: 80%;
+    text-align: left;
+    background-color: wheat;
+    border: 2px solid rgba(202, 144, 35, 0.747);
+}
+
+.custom-table th, .custom-table td {
+    padding: 10px;
+    border: 2px solid rgba(202, 144, 35, 0.747);
+}
+
+.custom-table th {
+    background-color: wheat;
+}
+
+.custom-table tr:hover {
+    background-color: wheat;
+}
