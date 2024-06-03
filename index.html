@@ -11,40 +11,39 @@
 </head>
 
 <body>
-    <div class="page-main">
-        <div class="column-1">
-            <button id="out-button1">Акции</button>
-            <button id="out-button2">Абонементы</button>
-            <button id="out-button3">Товар</button>
-            <button id="out-button4">База клиентов</button>
-            <button id="out-button">Сотрудники</button>
-            <button style="margin-top: 400px;" onclick="window.close();">Завершить сеанс</button>
+<div class="page-main">
+    <div class="column-1">
+        <button id="out-button1">Акции</button>
+        <button id="out-button2">Абонементы</button>
+        <button id="out-button3">Товар</button>
+        <button id="out-button4">Добавить сотрудника</button>
+        <button id="out-button">Сотрудники</button>
+        <button id="out-button5">Добавить клиента</button>
+        <button id="out-button6">Клиенты</button>
+        <button style="margin-top: 400px;" onclick="window.close();">Завершить сеанс</button>
+    </div>
+    <div class="column-2" id="out-columm"></div>
+    <div class="column-3">
+        <div class="price-1">
+            <div class="price-1-info">
+                <p>Сумма</p>
+            </div>
+            <div class="price-2-info">
+                <p>Итоговая сумма</p>
+            </div>
         </div>
-        <div class="column-2" id="out-columm"></div>
-        <div class="column-3">
-            <div class="price-1">
-                <div class="price-1-info">
-                    <p>Сумма</p>
-                </div>
-                <div class="price-2-info">
-                    <p>Итоговая сумма</p>
-                </div>
+        <div class="price-2" id="out-price2"></div>
+        <div class="price-3">
+            <div class="price-3-info">
+                <button>X</button>
             </div>
-            <div class="price-2" id="out-price2">
-
-            </div>
-            <div class="price-3">
-                <div class="price-3-info">
-                    <button>X</button>
-                </div>
-                <div class="price-4-info">
-                    <button>Печать</button>
-                </div>
+            <div class="price-4-info">
+                <button>Печать</button>
             </div>
         </div>
     </div>
-    <script src="js/index.js"></script>
-    <script src="db/firebase.js" type="module"></script>
+</div>
+<script src="js/index.js" defer></script>
+<script src="db/firebase.js" type="module" defer></script>
 </body>
-
 </html>
