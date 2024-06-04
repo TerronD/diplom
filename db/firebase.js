@@ -80,20 +80,29 @@ const getProducts = async () => {
         const productData = doc.data();
         console.log(doc.id, " => ", doc.data());
 
-        let button = document.createElement("button");
-        button.innerText = `${productData.name} (${productData.price}р)`;
-        button.style.padding = "8px";
-        button.onclick = () => {
-            addProductToPrice2(productData);
-        };
-
+        let button = createButtonWithText(productData, () => addProductToPrice2(productData));
         productContainer.appendChild(button);
     });
 }
 
+const createButtonWithText = (productData, onClickHandler) => {
+    const button = document.createElement("button");
+    button.innerText = `${productData.name} (${productData.price}р)`;
+    button.style.padding = "8px";
+    button.onclick = onClickHandler;
+    return button;
+}
+
 const addProductToPrice2 = (productData) => {
-    priceContainer.innerHTML += `<p>${productData.name} (${productData.price}р)</p>`;
+    const button = createButtonWithText(productData, () => removeProductFromPrice2(button, productData));
+    priceContainer.appendChild(button);
     totalPrice += productData.price;
+    totalPriceElement.innerHTML = `Итоговая сумма: ${totalPrice}р`;
+}
+
+const removeProductFromPrice2 = (button, productData) => {
+    priceContainer.removeChild(button);
+    totalPrice -= productData.price;
     totalPriceElement.innerHTML = `Итоговая сумма: ${totalPrice}р`;
 }
 
