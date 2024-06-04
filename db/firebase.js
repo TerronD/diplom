@@ -7,6 +7,8 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
 import { getUsers } from "./getUsers.js";
 import { loadUserForm } from "./addUser.js";
+import {getClients} from "./getClients.js";
+import {loadClientForm} from "./addClient.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyC7b4bYV2grScxP0wcdZ_Q7yNQCCVFOJmU",
@@ -33,7 +35,14 @@ userbutton.onclick = () => {
     getUsers();
 }
 
+const clientsbutton = document.getElementById("out-button6");
+clientsbutton.onclick = () => {
+    getClients();
+}
+
 document.getElementById("out-button4").onclick = loadUserForm;
+
+document.getElementById("out-button5").onclick = loadClientForm;
 
 const getStocks = async () => {
     const StocksRef = await getDocs(collection(db, "Stocks"));
