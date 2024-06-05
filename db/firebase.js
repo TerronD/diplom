@@ -46,13 +46,19 @@ document.getElementById("out-button5").onclick = loadClientForm;
 
 const getStocks = async () => {
     const StocksRef = await getDocs(collection(db, "Stocks"));
-    container.innerHTML = "";
+    const stocksContainer = document.getElementById("out-columm");
+    stocksContainer.innerHTML = "";
     StocksRef.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        container.innerHTML += `
-    <button>${doc.data().name}</button>
-    `
+        const stockData = doc.data();
+        console.log(doc.id, " => ", stockData);
+
+        let button = document.createElement("button");
+        button.innerText = `${stockData.name}, скидка: ${stockData.discount}%`;
+        button.style.padding = "8px";
+        button.onclick = () => {
+            addStockToPrice(stockData);
+        };
+        stocksContainer.appendChild(button);
     });
 }
 const Stocksbutton = document.getElementById("out-button1");
@@ -60,15 +66,54 @@ Stocksbutton.onclick = () => {
     getStocks();
 }
 
+let currentStockData = null;
+let currentStockButton = null;
+
+const addStockToPrice= (productData) => {
+    if (currentStockButton) {
+        removeStockFromPrice2(currentStockButton, currentStockData);
+    }
+    currentStockData = productData;
+    const stockElement = document.createElement("button");
+    stockElement.innerText = `${productData.name}, скидка: ${productData.discount}%`;
+    stockElement.style.padding = "8px";
+    stockElement.onclick = () => {
+        removeStockFromPrice2(stockElement, productData);
+    }
+
+    priceInfo.appendChild(stockElement);
+    currentStockButton = stockElement;
+
+    const discount = productData.discount / 100;
+    totalPrice = totalPrice * (1 - discount);
+    totalPriceElement.innerHTML = `Итоговая сумма: ${totalPrice.toFixed(2)}`;
+}
+
+const removeStockFromPrice2 = (button, stockData) => {
+    priceInfo.removeChild(button);
+    currentStockButton = null;
+
+    // пересчитываем итоговую сумму без скидки
+    const discount = stockData.discount / 100;
+    totalPrice = totalPrice / (1 - discount); // восстанавливаем исходную сумму
+
+    updateTotalPrice();
+}
+
+const updateTotalPrice = () => {
+    totalPriceElement.innerText = totalPrice.toFixed(2);
+}
+
 const getTickets = async () => {
     const TicketsRef = await getDocs(collection(db, "Season tickets"));
-    container.innerHTML = "";
+    const ticketsContainer = document.getElementById("out-columm");
+    ticketsContainer.innerHTML = "";
     TicketsRef.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        container.innerHTML += `
-    <button>${doc.data().name}</button>
-    `
+        const ticketData = doc.data();
+        console.log(doc.id, " => ", ticketData);
+
+        let button = createButtonWithText(ticketData, () => addTicketToPrice2(ticketData));
+        ticketsContainer.appendChild(button);
     });
 }
 const Ticketsbutton = document.getElementById("out-button2");
@@ -76,8 +121,24 @@ Ticketsbutton.onclick = () => {
     getTickets();
 }
 
+const addTicketToPrice2 = (ticketData) => {
+    const button = createButtonWithText(ticketData, () => removeTicketFromPrice2(button, ticketData));
+    priceContainer.appendChild(button);
+    totalPrice += ticketData.price;
+    updateTotalPrice();
+}
+
+const removeTicketFromPrice2 = (button, ticketData) => {
+    priceContainer.removeChild(button);
+    totalPrice -= ticketData.price;
+    updateTotalPrice();
+}
+
+
+
+const priceInfo = document.getElementById("price-2-info");
 const priceContainer = document.getElementById("out-price2");
-const totalPriceElement = document.querySelector(".price-2-info p");
+const totalPriceElement = document.getElementById("total-price");
 
 let totalPrice = 0;
 
@@ -96,7 +157,7 @@ const getProducts = async () => {
 
 const createButtonWithText = (productData, onClickHandler) => {
     const button = document.createElement("button");
-    button.innerText = `${productData.name} (${productData.price}р)`;
+    button.innerText = `${productData.name} (${productData.price || data.discount}р)`;
     button.style.padding = "8px";
     button.onclick = onClickHandler;
     return button;
@@ -107,12 +168,14 @@ const addProductToPrice2 = (productData) => {
     priceContainer.appendChild(button);
     totalPrice += productData.price;
     totalPriceElement.innerHTML = `Итоговая сумма: ${totalPrice}р`;
+    updateTotalPrice();
 }
 
 const removeProductFromPrice2 = (button, productData) => {
     priceContainer.removeChild(button);
     totalPrice -= productData.price;
     totalPriceElement.innerHTML = `Итоговая сумма: ${totalPrice}р`;
+    updateTotalPrice();
 }
 
 const Productsbutton = document.getElementById("out-button3");
@@ -120,3 +183,12 @@ Productsbutton.onclick = () => {
     getProducts();
 };
 
+const printButton = document.getElementById("print-button");
+
+printButton.onclick = () => {
+    if (priceContainer.children.length > 0) {
+        alert("ПЕЧАТЬ ОДОБРЕНА");
+    } else {
+        alert("Добавьте товары/услуги.");
+    }
+}
