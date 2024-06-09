@@ -12,6 +12,21 @@
 
 <body>
 <div class="page-main">
+    <div id="add-feedback-popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <label for="feedback-header" class="popup-label">Заголовок:</label>
+            <input type="text" id="feedback-header" class="popup-input">
+
+            <label for="feedback-grade" class="popup-label">Оценка:</label>
+            <input type="number" id="feedback-grade" class="popup-input" min="1" max="5">
+
+            <label for="feedback-description" class="popup-label margin-top">Описание:</label>
+            <textarea id="feedback-description" class="popup-input"></textarea>
+
+            <button id="send-feedback-btn" class="popup-button">Отправить</button>
+            <button id="close-popup-btn" class="popup-button">Закрыть</button>
+        </div>
+    </div>
     <div class="column-1">
         <button id="out-button1">Акции</button>
         <button id="out-button2">Абонементы</button>
@@ -20,6 +35,7 @@
         <button id="out-button">Сотрудники</button>
         <button id="out-button5">Добавить клиента</button>
         <button id="out-button6">Клиенты</button>
+        <button id="out_button7">Отзывы</button>
         <button style="margin-top: 400px;" onclick="window.close();">Завершить сеанс</button>
     </div>
     <div class="column-2" id="out-columm"></div>

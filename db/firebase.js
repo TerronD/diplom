@@ -69,6 +69,76 @@ Stocksbutton.onclick = () => {
 let currentStockData = null;
 let currentStockButton = null;
 
+const getFeedback = async() => {
+    const feedbackRef = await getDocs(collection(db, 'feedback'));
+    const feedbackContainer = document.getElementById('out-columm');
+    feedbackContainer.innerHTML = "";
+    feedbackRef.forEach((doc) => {
+        const feedbackData = doc.data();
+        console.log(doc.id, " =>", feedbackData);
+
+        let messageDiv = document.createElement("div");
+        messageDiv.style.border = "1px solid #ccc";
+        messageDiv.style.padding = "10px";
+        messageDiv.style.margin = "10px 0";
+
+        let header = document.createElement("h3");
+        header.innerText = feedbackData.header;
+
+        let grade = document.createElement("p");
+        grade.innerHTML = `<strong>Оценка:</strong> ${feedbackData.grade}`;
+
+        let description = document.createElement("p");
+        description.innerText = feedbackData.description;
+
+        messageDiv.appendChild(header);
+        messageDiv.appendChild(grade);
+        messageDiv.appendChild(description);
+
+        feedbackContainer.appendChild(messageDiv);
+    });
+
+    let feedbackButton = document.createElement("button");
+    feedbackButton.id = "add-feedback-btn";
+    feedbackButton.innerText = "Добавить отзыв";
+    feedbackButton.style.margin = "20px auto";
+    feedbackButton.style.backgroundColor = '#90EE90';
+    feedbackButton.style.display = "block";
+    feedbackButton.addEventListener("click", showFeedbackPopup);
+    feedbackContainer.appendChild(feedbackButton);
+}
+
+const showFeedbackPopup = () => {
+    document.getElementById("add-feedback-popup").style.display = "flex";
+}
+
+const closeFeedbackPopup = () => {
+    document.getElementById("add-feedback-popup").style.display = "none";
+}
+
+const addFeedback = async () => {
+    const header = document.getElementById("feedback-header").value;
+    const grade = document.getElementById("feedback-grade").value;
+    const description = document.getElementById("feedback-description").value;
+    
+    try {
+        await addDoc(collection(db, "feedback"), {
+            header: header,
+            grade: grade,
+            description: description
+        });
+        alert("Отзыв успешно добавлен!");
+        closeFeedbackPopup();
+        getFeedback();
+    } catch (e) {
+        console.error("Ошибка при добавлении отзыва: ", e);
+    }
+}
+
+document.getElementById("close-popup-btn").addEventListener("click", closeFeedbackPopup);
+document.getElementById("send-feedback-btn").addEventListener("click", addFeedback);
+document.getElementById("out_button7").addEventListener("click", getFeedback);
+
 const addStockToPrice= (productData) => {
     if (currentStockButton) {
         removeStockFromPrice2(currentStockButton, currentStockData);
